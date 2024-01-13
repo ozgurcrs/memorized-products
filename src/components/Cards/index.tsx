@@ -10,16 +10,20 @@ interface ICard {
 export const Cards: FC<ICard> = ({ products }): ReactNode => {
   return (
     <div className={styles["cards-container"]}>
-      {products.map(({ id, title, status, variants, image }: Product) => (
-        <Card
-          key={id}
-          id={id}
-          title={title}
-          status={status}
-          variants={variants}
-          image={image}
-        />
-      ))}
+      {products.map(
+        ({ id, title, status, variants, image, options }: Product) => (
+          <Card
+            key={id}
+            id={id}
+            title={title}
+            status={status}
+            variants={variants}
+            image={image}
+            price={variants[0].price}
+            options={options}
+          />
+        )
+      )}
     </div>
   );
 };

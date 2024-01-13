@@ -55,7 +55,7 @@ interface Variant {
   admin_graphql_api_id: string;
 }
 
-interface Option {
+export interface Option {
   id: number;
   product_id: number;
   name: string;
@@ -63,7 +63,7 @@ interface Option {
   values: string[];
 }
 
-interface Image {
+export interface Image {
   id: number;
   product_id: number;
   position: number;
@@ -75,4 +75,9 @@ interface Image {
   src: string;
   variant_ids: number[];
   admin_graphql_api_id: string;
+}
+
+export enum Sort {
+  FromCheapToExpensive,
+  FromExpensiveToCheap,
 }

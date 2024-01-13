@@ -1,30 +1,138 @@
-
-
-
-
-.card-container{
-    width: 300px;
-    height: 400px;
-    border-radius: 12px;
-    overflow: hidden;
-    border:1px solid #d2d2d2;
+.card-container {
+    width: 350px;
+    min-height: 500px;
+    border: 1px solid #f2f2f2;
     background: #fff;
     cursor: pointer;
+    position: relative;
+    box-shadow: 0 1px 20px 5px #f2f2f2;
+    border-radius: 12px;
+    margin-bottom: 35px;
+    margin-top: 35px;
 
 
-    & .image-container{
+
+    & .image-container {
         width: 100%;
-        height: auto;
+        height: 250px;
         padding: 12px 12px 0 12px;
-        border-bottom: 1px solid #f2f2f2;
-       
-        
+        padding-bottom: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
 
         & img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: 200px;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transform: rotate(-15deg);
         }
     }
-    
+
+    & .card-title {
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        color: #4a4a4a;
+    }
+
+    & .details {
+        width: 100%;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+
+
+
+        & .options {
+            width: 100%;
+            height: auto;
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+
+            & .option {
+                width: 100%;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #747474;
+                gap: 10px;
+                margin-top: 12px;
+
+
+                &>select {
+
+                    width: 270px;
+                    height: 40px;
+                    background-color: #fff;
+                    border: 1px solid #eee;
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    color: #4a4a4a;
+
+                    &:focus{
+                        outline: none;
+                    }
+
+                }
+            }
+        }
+
+
+        & .status {
+            color: #fff;
+            background-color: rgb(23, 211, 23);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+
+        }
+
+        & .price {
+            font-size: 18px;
+            color: #747474;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    }
+
+
+    & .button-container {
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        background-color: #EA1179;
+        color: #fff;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 200;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        transition: 500ms;
+
+
+        & svg {
+            font-size: 24px;
+        }
+
+        &:hover {
+            background-color: #fd1183;
+        }
+
+    }
+
 }

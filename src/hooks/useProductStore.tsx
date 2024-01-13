@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { ApiStatus, Product } from "../models";
+import { ApiStatus, Product, Sort } from "../models";
 
 interface IUseProductStore {
   fetchProductApiStatus: ApiStatus;
-  products: Product[];
   setSearchText: (query: string) => void;
+  searchText: string;
   filterProductBySearch: Product[];
+  setFilterOptions: (filterOptions: Sort) => void;
+  filterOptions: Sort;
+  getProductById: Function;
 }
 
 export const useProductStore = (): IUseProductStore => {
@@ -15,6 +18,9 @@ export const useProductStore = (): IUseProductStore => {
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
+  const [filterOptions, setFilterOptions] = useState<Sort>(
+    Sort.FromCheapToExpensive
+  );
 
   const getProducts = async () => {
     try {
@@ -59,22 +65,43 @@ export const useProductStore = (): IUseProductStore => {
     };
   }, []);
 
-  const filterProductBySearch = useMemo(() => {
+  const filteredProducts = useMemo(() => {
     return products.filter(
       (item) => item.title.toLowerCase().indexOf(searchText.toLowerCase()) > -1
     );
-  }, [products, searchText, pageNumber]);
+  }, [products, searchText]);
+
+  const sortedProducts = useMemo(() => {
+    if (Sort.FromCheapToExpensive === filterOptions) {
+      return filteredProducts.sort(
+        (a, b) => Number(a.variants[0].price) - Number(b.variants[0].price)
+      );
+    } else {
+      return filteredProducts.sort(
+        (a, b) => Number(b.variants[0].price) - Number(a.variants[0].price)
+      );
+    }
+  }, [filteredProducts, filterOptions]);
+
+  const getProductById = (id: string) => {
+    if (products.length) {
+      return products.find((item: Product) => String(item.id) === id);
+    }
+  };
 
   useEffect(() => {
     getProducts();
   }, []);
 
   return {
-    products,
     fetchProductApiStatus,
     setSearchText,
-    filterProductBySearch: filterProductBySearch.filter(
+    filterProductBySearch: sortedProducts.filter(
       (_, index) => index < pageNumber * 10
     ),
+    setFilterOptions,
+    filterOptions,
+    searchText,
+    getProductById,
   };
 };
