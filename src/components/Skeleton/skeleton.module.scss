@@ -1,11 +1,12 @@
 @use "../../styles/animations.scss"as animations;
+@use "../../styles/color-palette.scss"as *;
 
 
 
 .skeleton {
     width: 350px;
     height: 500px;
-    background-color: #fff;
+    @include background-palette(white);
     border: 1px solid #f2f2f2;
     box-shadow: 0 1px 20px 5px #fff;
     border-radius: 12px;
@@ -17,7 +18,7 @@
     &__image {
         width: 100%;
         height: 230px;
-        background-color: #f2f2f2;
+        @include background-palette(border);
         @include animations.useAnimation(variant_one);
     }
 
@@ -25,7 +26,7 @@
         width: 100%;
         height: 50px;
         margin-top: 10px;
-        background-color: #f2f2f2;
+        @include background-palette(border);
         @include animations.useAnimation(variant_two);
 
     }
@@ -34,7 +35,7 @@
         width: 100%;
         height: 50px;
         margin-top: 10px;
-        background-color: #f2f2f2;
+        @include background-palette(border);
         @include animations.useAnimation(variant_one);
 
     }
@@ -44,7 +45,7 @@
         height: 70px;
         position: absolute;
         bottom: 0;
-        background-color: #f2f2f2;
+        @include background-palette(border);
         @include animations.useAnimation(variant_two);
 
     }
