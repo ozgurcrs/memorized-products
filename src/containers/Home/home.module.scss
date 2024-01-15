@@ -13,6 +13,18 @@
     }
 }
 
+
+.skeleton-wrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 35px;
+    margin-top: 80px;
+}
+
 .home {
 
     width: 100%;

@@ -49,11 +49,13 @@ article {
 
 
         @include sm {
+            width: 90%;
             display: inline;
             height: auto;
         }
 
         @include xs {
+            width: 90%;
             display: inline;
             height: auto;
         }

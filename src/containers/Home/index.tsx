@@ -5,6 +5,9 @@ import { Cards } from "../../components/Cards";
 import styles from "./home.module.scss";
 import { Spinner } from "../../components/Spinner";
 import { GiDeathNote } from "react-icons/gi";
+import { Skeleton } from "../../components/Skeleton";
+import { ErrorBoundary } from "../ErrorBoundary";
+import { notifySuccess } from "../../components/ToastMessage";
 
 export const Home = () => {
   const {
@@ -29,6 +32,7 @@ export const Home = () => {
 
   const handleAddProduct = (product: Product) => {
     addProductToBasket(product);
+    notifySuccess("Success");
   };
 
   const RenderHomePage = () => {
@@ -68,8 +72,10 @@ export const Home = () => {
     switch (fetchProductApiStatus) {
       case ApiStatus.LOADING:
         return (
-          <div className={styles["spinner"]}>
-            <Spinner />
+          <div className={styles["skeleton-wrapper"]}>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <Skeleton key={index} />
+            ))}
           </div>
         );
 
@@ -77,7 +83,7 @@ export const Home = () => {
         return <RenderHomePage />;
 
       case ApiStatus.ERROR:
-        return <div>Error</div>;
+        return <ErrorBoundary />;
 
       default:
         return <div>Product Not Found</div>;

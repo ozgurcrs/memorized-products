@@ -32,14 +32,14 @@ export const useProductStore = (): IUseProductStore => {
   const getProducts = async () => {
     try {
       setFetchProductApiStatus(ApiStatus.LOADING);
-      const { products } = await fetch(
-        `https://teknasyon.netlify.app/.netlify/functions/products`,
-        {
-          headers: {
-            "X-Access-Token": "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",
-          },
-        }
-      ).then((res) => res.json());
+
+      const { VITE_API_URL, VITE_ACCESS_TOKEN } = import.meta.env;
+
+      const { products } = await fetch(VITE_API_URL, {
+        headers: {
+          "X-Access-Token": VITE_ACCESS_TOKEN,
+        },
+      }).then((res) => res.json());
 
       setFetchProductApiStatus(ApiStatus.SUCCESS);
 
