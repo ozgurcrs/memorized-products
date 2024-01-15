@@ -1,0 +1,25 @@
+@use "../../styles/color-palette.scss"as *;
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    cursor: pointer;
+
+    & h1 {
+        font-size: 28px;
+        font-weight: 100;
+        @include color-palette(secondary);
+
+        & b {
+            font-weight: 600;
+            @include color-palette(main);
+        }
+    }
+
+    & svg {
+        font-size: 32px;
+        @include color-palette(main);
+    }
+}

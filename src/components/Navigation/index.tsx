@@ -1,15 +1,21 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import styles from "./navigation.module.scss";
-import { BiJoystickButton } from "react-icons/bi";
+import { BiSearch } from "react-icons/bi";
 import { BsBasketFill } from "react-icons/bs";
 import { ProductContext } from "../../context";
 import { useDebouncedCallback } from "use-debounce";
 import { Basket } from "../Basket";
+import useMobile from "../../hooks/useMobile";
+import { IoMdClose } from "react-icons/io";
+import { Logo } from "../Logo";
 
 export const Navigation = (): ReactNode => {
   const [isActiveBasket, setIsActiveBasket] = useState<boolean>(false);
+  const [isActiveInput, setIsActiveInput] = useState<boolean>(false);
+  const { isMobile } = useMobile();
 
-  const { setSearchText } = useContext(ProductContext);
+  const { setSearchText, productOfBasket, removeProductFromBasket } =
+    useContext(ProductContext);
 
   const handleSearch = useDebouncedCallback((query) => {
     setSearchText(query);
@@ -19,26 +25,42 @@ export const Navigation = (): ReactNode => {
     setIsActiveBasket(!isActiveBasket);
   };
 
+  useEffect(() => {
+    setIsActiveInput(isMobile);
+  }, [isMobile]);
+
   return (
-    <div className={styles["navigation-container"]}>
-      <div className={styles["navigation"]}>
-        <BiJoystickButton />
-        <h1>
-          with<b>Product</b>
-        </h1>
-      </div>
-      <div className={styles["search-container"]}>
+    <div className={styles["nav-wrapper"]}>
+      <Logo />
+      <div
+        className={`${styles["nav-wrapper__search-container"]} ${
+          isActiveInput ? styles["nav-wrapper__search-container--active"] : ""
+        }`}
+      >
         <input
           onChange={(e) => handleSearch(e.target.value)}
           type="text"
           placeholder="Search..."
         />
+        {isActiveInput ? (
+          <IoMdClose onClick={() => setIsActiveInput(!isActiveInput)} />
+        ) : (
+          <BiSearch onClick={() => setIsActiveInput(!isActiveInput)} />
+        )}
       </div>
-      <div onClick={handleOpenBasket} className={styles["basket-container"]}>
-        <span>0</span>
+      <div
+        onClick={handleOpenBasket}
+        className={styles["nav-wrapper__basket-container"]}
+      >
+        <span>{productOfBasket.length}</span>
         <BsBasketFill />
       </div>
-      {isActiveBasket && <Basket />}
+      {isActiveBasket && (
+        <Basket
+          removeProductFromBasket={removeProductFromBasket}
+          productOfBasket={productOfBasket}
+        />
+      )}
     </div>
   );
 };

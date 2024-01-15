@@ -5,25 +5,19 @@ import styles from "./cards.module.scss";
 
 interface ICard {
   products: Product[];
+  handleAddProduct: (product: Product) => void;
 }
 
-export const Cards: FC<ICard> = ({ products }): ReactNode => {
+export const Cards: FC<ICard> = ({ products, handleAddProduct }): ReactNode => {
   return (
     <div className={styles["cards-container"]}>
-      {products.map(
-        ({ id, title, status, variants, image, options }: Product) => (
-          <Card
-            key={id}
-            id={id}
-            title={title}
-            status={status}
-            variants={variants}
-            image={image}
-            price={variants[0].price}
-            options={options}
-          />
-        )
-      )}
+      {products.map((product: Product) => (
+        <Card
+          key={product.id}
+          product={product}
+          handleAddProduct={handleAddProduct}
+        />
+      ))}
     </div>
   );
 };

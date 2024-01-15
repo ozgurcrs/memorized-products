@@ -1,18 +1,16 @@
-.card-container {
+@use "../../../styles/color-palette.scss"as *;
+
+.card {
     width: 350px;
     min-height: 500px;
     border: 1px solid #f2f2f2;
-    background: #fff;
+    @include background-palette(white);
     cursor: pointer;
     position: relative;
     box-shadow: 0 1px 20px 5px #f2f2f2;
     border-radius: 12px;
-    margin-bottom: 35px;
-    margin-top: 35px;
 
-
-
-    & .image-container {
+    &__image-container {
         width: 100%;
         height: 250px;
         padding: 12px 12px 0 12px;
@@ -20,8 +18,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-
 
         & img {
             width: 100%;
@@ -32,88 +28,88 @@
         }
     }
 
-    & .card-title {
+    &__title {
         width: 100%;
         text-align: center;
         font-size: 24px;
         color: #4a4a4a;
     }
 
-    & .details {
+    &__details {
         width: 100%;
         padding: 12px;
         display: flex;
         align-items: center;
 
+    }
+
+    &__status {
+        @include color-palette(white);
+        background-color: rgb(23, 211, 23);
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+
+    }
+
+    &__price {
+        font-size: 18px;
+        @include color-palette(secondary);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    &__options {
+        width: 100%;
+        height: auto;
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
 
-        & .options {
-            width: 100%;
-            height: auto;
-            margin-top: 12px;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
+
+    }
+
+    &__option {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @include color-palette(secondary);
+        gap: 10px;
+        margin-top: 12px;
 
 
-            & .option {
-                width: 100%;
-                height: auto;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                color: #747474;
-                gap: 10px;
-                margin-top: 12px;
+        &>select {
 
+            width: 270px;
+            height: 40px;
+            @include background-palette(white);
+            border: 1px solid #eee;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #4a4a4a;
 
-                &>select {
-
-                    width: 270px;
-                    height: 40px;
-                    background-color: #fff;
-                    border: 1px solid #eee;
-                    padding: 4px 12px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    color: #4a4a4a;
-
-                    &:focus{
-                        outline: none;
-                    }
-
-                }
+            &:focus {
+                outline: none;
             }
-        }
 
-
-        & .status {
-            color: #fff;
-            background-color: rgb(23, 211, 23);
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-
-        }
-
-        & .price {
-            font-size: 18px;
-            color: #747474;
-            position: absolute;
-            top: 10px;
-            right: 10px;
         }
     }
 
 
-    & .button-container {
+    &__button-container {
         width: 100%;
         height: 50px;
         position: absolute;
-        background-color: #EA1179;
+        @include background-palette(main);
         color: #fff;
         bottom: 0;
         display: flex;

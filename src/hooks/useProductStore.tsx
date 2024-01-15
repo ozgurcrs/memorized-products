@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ApiStatus, Product, Sort } from "../models";
 
-interface IUseProductStore {
+export interface IUseProductStore {
   fetchProductApiStatus: ApiStatus;
   setSearchText: (query: string) => void;
   searchText: string;
@@ -9,6 +9,10 @@ interface IUseProductStore {
   setFilterOptions: (filterOptions: Sort) => void;
   filterOptions: Sort;
   getProductById: Function;
+  isLoadingInfinityScroll: boolean;
+  addProductToBasket: (product: Product) => void;
+  productOfBasket: Product[];
+  removeProductFromBasket: (product: Product) => void;
 }
 
 export const useProductStore = (): IUseProductStore => {
@@ -18,9 +22,12 @@ export const useProductStore = (): IUseProductStore => {
   const [products, setProducts] = useState<Product[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
+  const [productOfBasket, setProductOfBasket] = useState<Product[]>([]);
   const [filterOptions, setFilterOptions] = useState<Sort>(
     Sort.FromCheapToExpensive
   );
+  const [isLoadingInfinityScroll, setIsLoadingInfinityScrol] =
+    useState<boolean>(false);
 
   const getProducts = async () => {
     try {
@@ -47,23 +54,41 @@ export const useProductStore = (): IUseProductStore => {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollable =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = window.scrollY;
+    if (products.length) {
+      let isFetching = false;
+      let tempPageNumber = 1;
 
-      const threshold = 100;
+      const handleScroll = () => {
+        const scrollable =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
 
-      if (scrollable - scrolled < threshold) {
-        loadMoreProducts();
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
+        const threshold = 100;
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+        if (scrollable - scrolled < threshold && !isFetching) {
+          const totalPageNumber = products.length / 10;
+
+          if (tempPageNumber < totalPageNumber) {
+            isFetching = true;
+            setIsLoadingInfinityScrol(true);
+
+            setTimeout(() => {
+              loadMoreProducts();
+              isFetching = false;
+              setIsLoadingInfinityScrol(false);
+              tempPageNumber = tempPageNumber + 1;
+            }, 3000);
+          }
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [products]);
 
   const filteredProducts = useMemo(() => {
     return products.filter(
@@ -89,6 +114,23 @@ export const useProductStore = (): IUseProductStore => {
     }
   };
 
+  const addProductToBasket = (product: Product) => {
+    setProductOfBasket((prev) => [...prev, product]);
+  };
+
+  const removeProductFromBasket = (product: Product) => {
+    const { id } = product;
+
+    const findProductIdx = productOfBasket.findIndex((item) => item.id === id);
+
+    const updateProductList = [
+      ...productOfBasket.slice(0, findProductIdx),
+      ...productOfBasket.slice(findProductIdx + 1),
+    ];
+
+    setProductOfBasket(updateProductList);
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -103,5 +145,9 @@ export const useProductStore = (): IUseProductStore => {
     filterOptions,
     searchText,
     getProductById,
+    isLoadingInfinityScroll,
+    addProductToBasket,
+    productOfBasket,
+    removeProductFromBasket,
   };
 };

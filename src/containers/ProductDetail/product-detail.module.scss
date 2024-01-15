@@ -1,11 +1,13 @@
 @use '../../styles/media-queries.scss'as *;
+@use '../../styles/color-palette.scss'as *;
+
 
 article {
     width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
-    background-color: #f9f9f9;
+    @include background-palette(background);
     padding: 24px;
     flex-direction: column;
     flex-wrap: wrap;
@@ -20,10 +22,24 @@ article {
         height: auto;
     }
 
+    .history-page {
+        width: 100%;
+        font-size: 36px;
+        @include color-palette(secondary);
+        transition: 500ms;
+        cursor: pointer;
+
+
+        &:hover {
+            @include color-palette(main);
+
+        }
+    }
+
     .product {
         width: 80%;
-        border: 1px solid #f2f2f2;
-        background-color: #fff;
+        @include border-palette(border);
+        @include background-palette(white);
         border-radius: 12px;
         height: 500px;
         display: flex;
@@ -62,20 +78,20 @@ article {
                 height: 300px;
                 object-fit: contain;
             }
+        }
 
-            &__images {
-                width: 100%;
-                height: 100px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+        &__images {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-                &>img {
-                    width: 100px;
-                    mix-blend-mode: multiply;
-                    border-bottom: 0;
-                    cursor: pointer;
-                }
+            &>img {
+                width: 100px;
+                mix-blend-mode: multiply;
+                border-bottom: 0;
+                cursor: pointer;
             }
         }
 
@@ -85,7 +101,7 @@ article {
             right: 5px;
             width: 16px;
             height: 16px;
-            background-color: #f9f9f9;
+            @include background-palette(background);
             border-radius: 50%;
             border: 1px solid #eee;
             display: flex;
@@ -97,7 +113,7 @@ article {
                 position: absolute;
                 right: -16px;
                 rotate: (240deg);
-                color: #ea1179;
+                @include color-palette(main);
 
                 @include sm {
                     rotate: (80deg);
@@ -117,8 +133,8 @@ article {
         &__action-button {
             width: 60%;
             height: 50px;
-            background-color: #f2f2f2;
-            color: #4a4a4a;
+            @include background-palette(border);
+            @include color-palette(secondary);
             cursor: pointer;
             position: absolute;
             bottom: 0;
@@ -132,8 +148,8 @@ article {
 
 
             &:hover {
-                background-color: #ea1179;
-                color: #fff;
+                @include background-palette(main);
+                @include color-palette(white);
             }
 
             @include sm {
@@ -168,138 +184,16 @@ article {
             }
 
 
-            &__options {
-                width: 100%;
-                height: auto;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                padding: 8px;
-
-                @include sm {
-                    justify-content: center;
-                    align-items: flex-start;
-                    margin-bottom: 60px;
-
-                }
-
-                @include xs {
-                    justify-content: center;
-                    align-items: flex-start;
-                    margin-bottom: 60px;
-                }
 
 
 
-                &__option {
-                    height: 50px;
-                    display: flex;
-                    padding: 12px;
-                    justify-content: flex-start;
-                    align-items: center;
-                    gap: 12px;
-
-                    @include sm {
-                        width: 100%;
-                    }
-
-                    @include xs {
-                        width: 100%;
-                    }
-
-
-
-
-                    & span {
-                        color: #4a4a4a;
-                        font-weight: 300;
-
-                        @include sm {
-                            font-size: 12px;
-
-                        }
-
-                        @include xs {
-                            font-size: 12px;
-
-                        }
-                    }
-
-                    & select {
-                        width: 250px;
-                        border: 1px solid #eeeeee;
-                        height: 45px;
-                        border-radius: 4px;
-                        color: #4a4a4a;
-                        font-weight: 100;
-                        padding: 8px;
-
-                        @include sm {
-                            width: 100%;
-                            height: auto;
-                        }
-
-                        @include xs {
-                            width: 100%;
-                            height: auto;
-                        }
-
-                        &:focus {
-                            outline: none;
-                        }
-                    }
-                }
-            }
-
-            &__label {
-                width: 100%;
-                height: auto;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 8px 24px;
-
-                &>h1 {
-                    font-size: 36px;
-                    font-weight: 400;
-                    margin: 0;
-                    color: #ea1179;
-                    font-family: "Montserrat", sans-serif;
-
-                    @include sm {
-                        font-size: 24px;
-
-                    }
-
-                    @include xs {
-                        font-size: 24px;
-
-                    }
-                }
-
-                & span {
-                    font-size: 24px;
-                    color: #4a4a4a;
-
-                    @include sm {
-                        font-size: 18px;
-
-                    }
-
-                    @include xs {
-                        font-size: 18px;
-
-                    }
-                }
-            }
 
             &>p {
                 padding: 4px 24px;
                 line-height: 24px;
                 font-size: 14px;
                 font-weight: 300;
-                color: #4a4a4a;
+                @include color-palette(secondary);
                 text-align: justify;
 
                 @include sm {
@@ -309,6 +203,134 @@ article {
 
                 @include xs {
                     font-size: 12px;
+
+                }
+            }
+        }
+
+        &__options {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 8px;
+
+            @include sm {
+                justify-content: center;
+                align-items: flex-start;
+                margin-bottom: 60px;
+
+            }
+
+            @include xs {
+                justify-content: center;
+                align-items: flex-start;
+                margin-bottom: 60px;
+            }
+
+
+
+
+        }
+
+        &__option {
+            height: 50px;
+            display: flex;
+            padding: 12px;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 12px;
+
+            @include sm {
+                width: 100%;
+            }
+
+            @include xs {
+                width: 100%;
+            }
+
+
+
+
+            & span {
+                @include color-palette(secondary);
+                font-weight: 300;
+
+                @include sm {
+                    font-size: 12px;
+
+                }
+
+                @include xs {
+                    font-size: 12px;
+
+                }
+            }
+
+            & select {
+                width: 250px;
+                border: 1px solid #eeeeee;
+                height: 45px;
+                border-radius: 4px;
+                @include color-palette(secondary);
+                font-weight: 100;
+                padding: 8px;
+
+                @include sm {
+                    width: 100%;
+                    height: auto;
+                }
+
+                @include xs {
+                    width: 100%;
+                    height: auto;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        &__label {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 24px;
+
+            &>h1 {
+                font-size: 36px;
+                font-weight: 400;
+                margin: 0;
+                @include color-palette(main);
+                font-family: "Montserrat", sans-serif;
+
+                @include sm {
+                    font-size: 24px;
+
+                }
+
+                @include xs {
+                    font-size: 24px;
+                }
+            }
+
+            & span {
+                font-size: 24px;
+                @include color-palette(secondary);
+
+
+                @include sm {
+                    font-size: 18px;
+
+                }
+
+                @include xs {
+                    font-size: 18px;
 
                 }
             }

@@ -1,0 +1,26 @@
+$main-color: #ea1179;
+$secondary-color: #4a4a4a;
+$background-color: #f9f9f9;
+$border-color: #f2f2f2;
+$white: #fff;
+$gray-color:#eee;
+
+$color-palette: (main: $main-color,
+    secondary: $secondary-color,
+    background: $background-color,
+    border: $border-color,
+    white: $white, gray:$gray-color);
+
+
+
+@mixin color-palette($color) {
+    color: map-get($color-palette, $color);
+}
+
+@mixin background-palette($color) {
+    background-color: map-get($color-palette, $color);
+}
+
+@mixin border-palette($color) {
+    border-color: map-get($color-palette, $color);
+}

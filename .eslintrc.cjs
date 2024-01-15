@@ -9,13 +9,18 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
+  globals: {
+    module: 'readonly',
+    process: 'readonly',
+    require: 'readonly',
+  },
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
-    "@typescript-eslint/no-explicit-any": "off",
-    "react-hooks/exhaustive-deps":"off",
-    "@typescript-eslint/ban-types":"off"
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    '@typescript-eslint/ban-types': 'off',
   },
-}
+};
